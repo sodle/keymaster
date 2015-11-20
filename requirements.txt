@@ -1,3 +1,4 @@
 flask>=0.10.1
 schedule>=0.3.2
 psycopg2>=2.6.1
+hashids>=1.0.0

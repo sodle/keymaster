@@ -23,7 +23,11 @@ The app is written in Flask and connects to a Postgres database.
 - Linux (for now)
 - Python 2.7
 - Postgres server
+- Nginx
 
 ### Installation:
 1. `sudo pip install -r requirements.txt`
-2. *insert instructions for starting server*
+2. *insert instructions for initializing database*
+3. *insert instructions for setting up WSGI server*
+4. *insert instructions for setting up Nginx reverse proxy*
+5. *insert instructions for local configuration*
