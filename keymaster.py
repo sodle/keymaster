@@ -1,9 +1,9 @@
-from flask import Flask
+from flask import Flask, request
 application = Flask(__name__)
 
 @application.route('/k', methods=['POST'])
 def upload_key():
-    return 'error'
+    return str(request)
 
 @application.route('/k/<key_id>')
 def index(key_id):
