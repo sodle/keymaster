@@ -2,13 +2,13 @@ server {
   listen 80;
   server_name keymaster.sjodle.com www.keymaster.sjodle.com;
 
-  location / {
-    root /www/keymaster/static;
-    index index.html;
-  }
-
   location /k {
     include uwsgi_params;
     uwsgi_pass unix:/www/keymaster/keymaster.sock;
+  }
+
+  location / {
+    root /www/keymaster/static;
+    index index.html;
   }
 }
