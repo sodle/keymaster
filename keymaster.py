@@ -3,10 +3,7 @@ application = Flask(__name__)
 
 @application.route('/k', methods=['POST'])
 def upload_key():
-    if request.method == 'POST':
-        return 'worked'
-    else:
-        return 'error'
+    return 'error'
 
 @application.route('/k/<key_id>')
 def index(key_id):
