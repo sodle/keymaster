@@ -24,6 +24,7 @@ The app is written in Flask and connects to a Postgres database.
 - Python 2.7
 - Postgres server
 - Nginx
+- libpcre3 and libpcre3-dev
 
 ### Installation:
 1. `sudo pip install -r requirements.txt`
