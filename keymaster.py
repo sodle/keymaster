@@ -3,7 +3,10 @@ application = Flask(__name__)
 
 @application.route('/k', methods=['POST'])
 def upload_key():
-    return str(request.form)
+    if 'public_key' in request.form:
+        return 'Uploading key: ' + request.form['public_key'] + '.'
+    else:
+        return 'No key uploaded.'
 
 @application.route('/k/<key_id>')
 def index(key_id):
