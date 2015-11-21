@@ -20,7 +20,7 @@ Keymaster provides an easy way to upload your SSH keys to services like Github a
 The app is written in Flask and connects to a Postgres database.
 
 ### Server requirements:
-- Linux (for now)
+- Linux with systemd (for now)
 - Python 2.7
 - Postgres server
 - Nginx
