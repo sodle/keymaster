@@ -1,0 +1,9 @@
+[Unit]
+Description=uWSGI service to run Keymaster server
+
+[Service]
+ExecStartPre=-/bin/bash -c 'mkdir -p /run/uwsgi; chown sodle:www-data /run/uwsgi'
+ExecStart=/bin/bash -c 'cd /www/keymaster; uwsgi --ini keymaster.ini'
+
+[Install]
+WantedBy=multi-user.target

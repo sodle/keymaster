@@ -1,0 +1,9 @@
+server {
+  listen 80;
+  server_name keymaster.sjodle.com www.keymaster.sjodle.com;
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass unix:/www/keymaster/keymaster.sock;
+  }
+}

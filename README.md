@@ -20,14 +20,26 @@ Keymaster provides an easy way to upload your SSH keys to services like Github a
 The app is written in Flask and connects to a Postgres database.
 
 ### Server requirements:
-- Linux (for now)
+- Linux with systemd (for now)
 - Python 2.7
-- Postgres server
+- Postgres server with development headers
 - Nginx
+- libpcre3 and libpcre3-dev
 
-### Installation:
-1. `sudo pip install -r requirements.txt`
-2. *insert instructions for initializing database*
-3. *insert instructions for setting up WSGI server*
-4. *insert instructions for setting up Nginx reverse proxy*
+### Server installation:
+1. Install dependencies
+    1. Install Python 2.7, headers, PCRE, Nginx, Postgres through your preferred package manager
+    2. `sudo pip install -r requirements.txt`
+2. Set up your database
+    1. Create a Postgres user and database for Keymaster
+    2. `psql -d <database> -U <user> -f db_init.sql`
+3. Configure uWSGI
+    1. Update paths, usernames, and groups in `keymaster.ini` and `keymaster.service`
+    2. Copy or hard-link `keymaster.service` to `/etc/systemd/system/keymaster.service`
+    3. `sudo service keymaster start`
+    4. `sudo service keymaster enable`
+4. Configure Nginx passthrough
+    1. Update paths in `keymaster.nginx`
+    2. Copy or hard-link `keymaster.nginx` to `/etc/nginx/conf.d/keymaster`
+    3. `sudo service nginx restart`
 5. *insert instructions for local configuration*
