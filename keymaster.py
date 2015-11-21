@@ -1,9 +1,9 @@
 from flask import Flask
 application = Flask(__name__)
 
-@application.route('/i/*')
-def index():
-    return 'Hello world!'
+@application.route('/i/<key_hash>')
+def index(key_hash):
+    return 'Hello key #' + key_hash
 
 if __name__ == '__main__':
     application.run(host='0.0.0.0')
