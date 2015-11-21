@@ -1,7 +1,7 @@
 from flask import Flask
 application = Flask(__name__)
 
-@application.route('/i/<key_hash>')
+@application.route('/k/<key_hash>')
 def index(key_hash):
     return 'Hello key #' + key_hash
 

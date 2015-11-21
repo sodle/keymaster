@@ -7,7 +7,7 @@ server {
     index index.html;
   }
 
-  location /i/ {
+  location /k {
     include uwsgi_params;
     uwsgi_pass unix:/www/keymaster/keymaster.sock;
   }
