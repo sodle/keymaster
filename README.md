@@ -42,4 +42,4 @@ The app is written in Flask and connects to a Postgres database.
     1. Update paths in `keymaster.nginx`
     2. Copy or symlink `keymaster.nginx` to `/etc/nginx/conf.d/keymaster`
     3. `sudo service nginx restart`
-5. *insert instructions for local configuration*
+5. Copy `config.spec.py` to `config.py` and update the built-in settings.
