@@ -45,7 +45,7 @@ def expire_key(hashid):
     conn.close()
 
 # Extend a key's expiration by 30 minutes.
-def expire_key(hashid):
+def extend_key(hashid):
     conn = config.DB_CONNECTION()
     cur = conn.cursor()
     db_id = hasher.decode(hashid)
