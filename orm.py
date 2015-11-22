@@ -22,11 +22,12 @@ def upload_key(public_key):
 def fetch_key(hashid):
     conn = config.DB_CONNECTION()
     cur = conn.cursor()
-    db_id = hasher.decode(hashid)
+    db_id = hasher.decode(hashid)[0]
     select_query = ("SELECT * FROM uploaded_key WHERE upload_id=%s "
                     "AND expire_time>current_timestamp")
     cur.execute(select_query, [db_id])
     key_obj = cur.fetchone()
+    print(key_obj)
     conn.commit()
     cur.close()
     conn.close()
@@ -36,7 +37,7 @@ def fetch_key(hashid):
 def expire_key(hashid):
     conn = config.DB_CONNECTION()
     cur = conn.cursor()
-    db_id = hasher.decode(hashid)
+    db_id = hasher.decode(hashid)[0]
     update_query = ("UPDATE uploaded_key SET expire_time=current_timestamp "
                     "WHERE upload_id=%s")
     cur.execute(update_query, [db_id])
@@ -48,7 +49,7 @@ def expire_key(hashid):
 def extend_key(hashid):
     conn = config.DB_CONNECTION()
     cur = conn.cursor()
-    db_id = hasher.decode(hashid)
+    db_id = hasher.decode(hashid)[0]
     update_query = ("UPDATE uploaded_key "
                     "SET expire_time=expire_time+interval '30 minutes' "
                     "WHERE upload_id=%s AND expire_time>current_timestamp")

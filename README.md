@@ -34,12 +34,12 @@ The app is written in Flask and connects to a Postgres database.
     1. Create a Postgres user and database for Keymaster
     2. `psql -d <database> -U <user> -f db_init.sql`
 3. Configure uWSGI
-    1. Update paths, usernames, and groups in `keymaster.ini` and `keymaster.service`
-    2. Copy or symlink `keymaster.service` to `/etc/systemd/system/keymaster.service`
+    1. Update paths, usernames, and groups in `daemon/keymaster.ini` and `daemon/keymaster.service`
+    2. Copy or symlink `daemon/keymaster.service` to `/etc/systemd/system/keymaster.service`
     3. `sudo service keymaster start`
     4. `sudo service keymaster enable`
 4. Configure Nginx passthrough
-    1. Update paths in `keymaster.nginx`
-    2. Copy or symlink `keymaster.nginx` to `/etc/nginx/conf.d/keymaster`
+    1. Update paths in `daemon/keymaster.nginx`
+    2. Copy or symlink `daemon/keymaster.nginx` to `/etc/nginx/conf.d/keymaster`
     3. `sudo service nginx restart`
 5. Copy `config.spec.py` to `config.py` and update the built-in settings.
