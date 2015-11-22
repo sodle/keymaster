@@ -1,6 +1,8 @@
 from flask import Flask, request, abort, redirect, url_for
 import orm
 import datetime
+from urlparse import urljoin
+import config
 application = Flask(__name__)
 
 @application.route('/k', methods=['POST'])
@@ -11,7 +13,9 @@ def upload_key():
             if 'redirect' in request.form:
                 return redirect(url_for('show_key', key_id=key_hashid))
             else:
-                return url_for('show_key', key_id=key_hashid)
+                rel_url = url_for('show_key', key_id=key_hashid)
+                fq_url = urljoin(config.BASE_SHORTENER_URL, rel_url)
+                return fq_url
         else:
             abort(500)
     else:
@@ -22,7 +26,12 @@ def show_key(key_id):
     key_obj = orm.fetch_key(key_id)
     if key_obj:
         lifetime = key_obj[3] - datetime.datetime.now()
-        return "Your public key is: " + key_obj[2] + ". Expires in " + str(lifetime).split('.')[0]
+        rel_url = url_for('show_key', key_id=key_id)
+        fq_url = urljoin(config.BASE_SHORTENER_URL, rel_url)
+        return ("Your public key is: " + key_obj[2] + ". "
+                "Expires in " + str(lifetime).split('.')[0] + ". "
+                "URL: " + fq_url + "."
+                )
     else:
         abort(404)
 
