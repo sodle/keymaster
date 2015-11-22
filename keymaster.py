@@ -3,6 +3,7 @@ import orm
 import datetime
 from urlparse import urljoin
 import config
+import crontab
 application = Flask(__name__)
 
 @application.route('/k', methods=['POST'])
@@ -32,6 +33,14 @@ def show_key(key_id):
                 "Expires in " + str(lifetime).split('.')[0] + ". "
                 "URL: " + fq_url + "."
                 )
+    else:
+        abort(404)
+
+@application.route('/k/<key_id>/key')
+def show_raw_key(key_id):
+    key_obj = orm.fetch_key(key_id)
+    if key_obj:
+        return key_obj[2]
     else:
         abort(404)
 
