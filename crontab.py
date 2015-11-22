@@ -20,6 +20,9 @@ schedule.every(60).minutes.do(prune_db)
 class Crontab(threading.Thread):
     @classmethod
     def run(cls):
-        schedule.run_pending()
-        time.sleep(600)
-Crontab().start()
+        schedule.run_all()
+        while True:
+            schedule.run_pending()
+            time.sleep(600)
+tab = Crontab()
+tab.start()
