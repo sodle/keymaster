@@ -2,6 +2,7 @@
 ## *There is no password, only Zuul.*
 
 ---
+[![Build Status](https://travis-ci.org/sodle/keymaster.svg?branch=master)](https://travis-ci.org/sodle/keymaster)
 
 Keymaster provides an easy way to upload your SSH keys to services like Github and Bitbucket. It's useful for authorizing machines from which you can't easily access a web browser or your LastPass account.
 
