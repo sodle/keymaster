@@ -13,5 +13,3 @@ before_script:
   - sed 's/\/var\/log\/keymaster/logs/' config.spec.py > config.py
   - mkdir logs
 script: "python -m unittest discover -v"
-after_script:
-  - cat logs/keymaster.log
