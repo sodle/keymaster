@@ -13,5 +13,4 @@ before_script:
   - psql keymaster zuul -f db_init.sql
   - sed 's/\/var\/log\/keymaster/logs/' config.spec.py > config.py
   - mkdir logs
-  - python -m unittest -h
 script: "python -m unittest discover"
