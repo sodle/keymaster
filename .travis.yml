@@ -11,6 +11,6 @@ before_script:
   - psql -U postgres -c 'CREATE USER zuul;'
   - createdb keymaster -O zuul
   - psql keymaster zuul -f db_init.sql
-  - sed 's/\/var\/log\/keymaster' config.spec.py > config.py
+  - sed 's/\/var\/log\/keymaster/logs/' config.spec.py > config.py
   - mkdir logs
 script: "python tests.py"
