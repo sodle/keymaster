@@ -12,4 +12,5 @@ before_script:
   - createdb keymaster -O zuul
   - psql keymaster zuul -f db_init.sql
   - cp config.spec.py config.py
+  - mkdir /var/log/keymaster
 script: "python tests.py"
