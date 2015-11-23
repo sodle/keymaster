@@ -1,0 +1,23 @@
+{
+  "name": "keymaster",
+  "homepage": "https://github.com/sodle/keymaster",
+  "authors": [
+    "Scott Odle <scott@sjodle.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  }
+}

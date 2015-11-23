@@ -1,1 +1,54 @@
-Hello index!
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Keymaster - SSH Key Uploader</title>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body>
+<div class="container-fluid">
+  <div class="jumbotron">
+    <h1>Keymaster</h1>
+    <h2>Easily update your public SSH keys to Github and Bitbucket.</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Paste your public key below...</h3>
+      <form action="/k" method="post">
+        <input type='hidden' name="redirect" value="true">
+        <div id='form_alert'></div>
+        <textarea id="pkfield" name="public_key" class="form-control"></textarea>
+        <button type='submit' class="btn btn-default">Upload key</button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h3>...or use one of our clients!</h3>
+      <p>
+        (Coming soon)
+      </p>
+    </div>
+  </div>
+</div>
+</body>
+<script src='/bower_components/jquery/dist/jquery.min.js'></script>
+<script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+<script>
+  $(document).ready(function() {
+    var $form_alert = $('#form_alert');
+    var $pk_field = $('#pkfield');
+
+    $form_alert.hide();
+    $pk_field.on('change keyup paste', function() {
+      if ($pk_field.val().toLowerCase().indexOf('private') >= 0) {
+        $form_alert.addClass('alert alert-danger');
+        $form_alert.text('You seem to be uploading a PRIVATE KEY. This is a VERY BAD idea!');
+        $form_alert.show();
+      } else {
+        $form_alert.hide();
+        $form_alert.removeClass('alert alert-danger');
+        $form_alert.text('');
+      }
+    });
+  });
+</script>
+</html>
