@@ -3,8 +3,11 @@ import psycopg2
 import schedule
 import threading
 import time
+import keymaster
+
 
 def prune_db():
+    keymaster.logger.info('Pruning expired keys from database.')
     conn = config.DB_CONNECTION()
     cur = conn.cursor()
     update_query = ("UPDATE uploaded_key SET public_key='' "
@@ -16,13 +19,3 @@ def prune_db():
     conn.close()
 
 schedule.every(60).minutes.do(prune_db)
-
-class Crontab(threading.Thread):
-    @classmethod
-    def run(cls):
-        schedule.run_all()
-        while True:
-            schedule.run_pending()
-            time.sleep(600)
-tab = Crontab()
-tab.start()

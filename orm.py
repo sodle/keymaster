@@ -5,6 +5,7 @@ import urlparse
 # ID Hasher
 hasher = Hashids(salt=config.HASH_SALT)
 
+
 # Push an ID to the database and get the hashid for it.
 def upload_key(public_key):
     conn = config.DB_CONNECTION()
@@ -17,6 +18,7 @@ def upload_key(public_key):
     cur.close()
     conn.close()
     return hasher.encode(db_id)
+
 
 # Get a key back from the database by its hashid.
 def fetch_key(hashid):
@@ -36,6 +38,7 @@ def fetch_key(hashid):
     conn.close()
     return key_obj
 
+
 # Force a key to expire.
 def expire_key(hashid):
     conn = config.DB_CONNECTION()
@@ -51,6 +54,7 @@ def expire_key(hashid):
     conn.commit()
     cur.close()
     conn.close()
+
 
 # Extend a key's expiration by 30 minutes.
 def extend_key(hashid):
