@@ -1,4 +1,4 @@
-from wsgi import application
+from keymaster import application
 import unittest
 
 
@@ -21,5 +21,4 @@ class KeymasterTests(unittest.TestCase):
 
     def test_key_upload(self):
         result = self.app.post('/k', data=dict(public_key="test key"))
-        print(result.data)
         self.assertEqual(result.status_code, 200)

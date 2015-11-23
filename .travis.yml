@@ -10,6 +10,7 @@ before_script:
   - psql -U postgres -c 'CREATE USER zuul;'
   - createdb keymaster -O zuul
   - psql keymaster zuul -f db_init.sql
+  - psql keymaster zuul -c 'select * from uploaded_key;'
   - sed 's/\/var\/log\/keymaster/logs/' config.spec.py > config.py
   - mkdir logs
 script: "python -m unittest discover -v"
