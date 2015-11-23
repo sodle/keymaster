@@ -8,6 +8,7 @@ import logging
 from logging.handlers import TimedRotatingFileHandler as TRFHandler
 
 application = Flask(__name__, template_folder='templates')
+application.url_map.strict_slashes = False
 
 # Logging handler
 file_rotator = TRFHandler(config.LOGGING_LOCATION,
@@ -88,6 +89,7 @@ def show_key(key_id):
 
 
 @application.route('/k/<key_id>/key')
+@application.route('/k/<key_id>/key/')
 def show_raw_key(key_id):
     application.logger.info('Getting raw public key ' + key_id)
     key_obj = orm.fetch_key(key_id)
