@@ -26,12 +26,15 @@ application.logger.info("Server starting.")
 
 @application.before_request
 def pre_request_logging():
+    headers_array = []
+    for h in headers_array:
+        headers_array.append(' : '.join(x))
     application.logger.info(' '.join([
         request.remote_addr,
         request.method,
         request.url,
         request.data,
-        ', '.join([': '.join(x) for x in request.headers])])
+        ', '.join(headers_array)])
     )
 
 
