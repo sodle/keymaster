@@ -9,7 +9,7 @@ services:
   - postgresql
 before_script:
   - psql -U postgres -c 'CREATE USER zuul;'
-  - psql -U zuul -c 'CREATE DATABASE keymaster;'
+  - createdb keymaster -O zuul
   - psql keymaster zuul -f db_init.sql
   - cp config.spec.py config.py
 script: "python tests.py"
