@@ -118,4 +118,4 @@ def expire_key(key_id):
         abort(404)
 
 if __name__ == '__main__':
-    application.run(host='0.0.0.0', debug=True)
+    application.run(host='0.0.0.0')
