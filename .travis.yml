@@ -12,4 +12,4 @@ before_script:
   - psql keymaster zuul -f db_init.sql
   - sed 's/\/var\/log\/keymaster/logs/' config.spec.py > config.py
   - mkdir logs
-script: "python -m unittest discover -V"
+script: "python -m unittest discover -v"
