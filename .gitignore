@@ -1,3 +1,4 @@
 *.pyc
 *.sock
 config.py
+static/bower_components

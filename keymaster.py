@@ -1,4 +1,4 @@
-from flask import Flask, request, abort, redirect, url_for
+from flask import Flask, request, abort, redirect, url_for, render_template
 import orm
 import datetime
 from urlparse import urljoin
@@ -7,7 +7,8 @@ import crontab
 import logging
 from logging.handlers import TimedRotatingFileHandler as TRFHandler
 
-application = Flask(__name__)
+application = Flask(__name__, template_folder='templates')
+application.url_map.strict_slashes = False
 
 # Logging handler
 file_rotator = TRFHandler(config.LOGGING_LOCATION,
@@ -69,6 +70,7 @@ def upload_key():
 
 
 @application.route('/k/<key_id>')
+@application.route('/k/<key_id>/')
 def show_key(key_id):
     application.logger.info('Getting public key ' + key_id)
     key_obj = orm.fetch_key(key_id)
@@ -76,16 +78,18 @@ def show_key(key_id):
         lifetime = key_obj[3] - datetime.datetime.now()
         rel_url = url_for('show_key', key_id=key_id)
         fq_url = urljoin(config.BASE_SHORTENER_URL, rel_url)
-        return ("Your public key is: " + key_obj[2] + ". "
-                "Expires in " + str(lifetime).split('.')[0] + ". "
-                "URL: " + fq_url + "."
-                )
+        return render_template('show_key.html',
+                               key_id=key_id,
+                               public_key=key_obj[2],
+                               expires_in=str(lifetime).split('.')[0]
+                               )
     else:
         application.logger.error('Key not found!')
         abort(404)
 
 
 @application.route('/k/<key_id>/key')
+@application.route('/k/<key_id>/key/')
 def show_raw_key(key_id):
     application.logger.info('Getting raw public key ' + key_id)
     key_obj = orm.fetch_key(key_id)

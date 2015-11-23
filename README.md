@@ -26,11 +26,13 @@ The app is written in Flask and connects to a Postgres database.
 - Postgres server with development headers
 - Nginx
 - libpcre3 and libpcre3-dev
+- Bower
 
 ### Server installation:
 1. Install dependencies
     1. Install Python 2.7, headers, PCRE, Nginx, Postgres through your preferred package manager
     2. `sudo pip install -r requirements.txt`
+    3. `bower install`
 2. Set up your database
     1. Create a Postgres user and database for Keymaster
     2. `psql -d <database> -U <user> -f db_init.sql`

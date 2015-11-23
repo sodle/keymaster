@@ -7,7 +7,7 @@ import keymaster
 
 
 def prune_db():
-    keymaster.logger.info('Pruning expired keys from database.')
+    keymaster.application.logger.info('Pruning expired keys from database.')
     conn = config.DB_CONNECTION()
     cur = conn.cursor()
     update_query = ("UPDATE uploaded_key SET public_key='' "
