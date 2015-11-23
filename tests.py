@@ -36,17 +36,17 @@ class KeymasterTests(unittest.TestCase):
 
     def test_raw_key_retrieval(self):
         result = self.app.post('/k', data=dict(public_key="test key"))
-        result2 = self.app.get(result.data + '/key')
+        result2 = self.app.get(urlparse.urljoin(result.data, 'key'))
         self.assertEqual(result2.status_code, 200)
 
     def test_key_extension(self):
         result = self.app.post('/k', data=dict(public_key="test key"))
-        extend_url = result.data + '/extend'
+        extend_url = urlparse.urljoin(result.data, 'extend')
         result2 = self.app.post(extend_url)
         self.assertEqual(result2.status_code, 302)
 
     def test_key_expiration(self):
         result = self.app.post('/k', data=dict(public_key="test key"))
-        expire_url = result.data + '/expire'
+        expire_url = urlparse.urljoin(result.data, 'expire')
         result2 = self.app.post(expire_url)
         self.assertEqual(result2.status_code, 302)
