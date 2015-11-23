@@ -1,7 +1,6 @@
 from keymaster import application
 import unittest
 from urlparse import urljoin
-from flask import url_for
 
 
 class KeymasterTests(unittest.TestCase):
@@ -23,8 +22,7 @@ class KeymasterTests(unittest.TestCase):
         pass
 
     def test_key_upload_success(self):
-        result = self.app.post(url_for('upload_key'),
-                               data=dict(public_key="test key"))
+        result = self.app.post('/k', data=dict(public_key="test key"))
         self.assertEqual(result.status_code, 200)
 
     def test_key_upload_returns_url(self):
