@@ -46,7 +46,10 @@ def post_request(response):
 @application.route('/k', methods=['POST'])
 def upload_key():
     if 'public_key' in request.form:
-        application.logger.info('Uploading public key')
+        log_entry = ("Uploading key \"" + request.form['public_key'] + "\" for"
+                     " IP " + request.remote_addr
+                     )
+        application.logger.info(log_entry)
         key_hashid = orm.upload_key(request.form['public_key'])
         if key_hashid and key_hashid != '':
             if 'redirect' in request.form:
