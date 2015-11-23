@@ -26,16 +26,14 @@ application.logger.info("Server starting.")
 
 @application.before_request
 def pre_request_logging():
-    headers_array = []
-    for h in headers_array:
-        headers_array.append(' : '.join(x))
-    application.logger.info(' '.join([
-        request.remote_addr,
-        request.method,
-        request.url,
-        request.data,
-        ', '.join(headers_array)])
-    )
+    if not(application.testing):
+        application.logger.info(' '.join([
+            request.remote_addr,
+            request.method,
+            request.url,
+            request.data,
+            ', '.join([': '.join(x) for x in request.headers])])
+        )
 
 
 @application.after_request
@@ -49,10 +47,11 @@ def post_request(response):
 @application.route('/k', methods=['POST'])
 def upload_key():
     if 'public_key' in request.form:
-        log_entry = ("Uploading key \"" + request.form['public_key'] + "\" for"
-                     " IP " + request.remote_addr
-                     )
-        application.logger.info(log_entry)
+        if not(application.testing):
+            log_entry = ("Uploading key \"" + request.form['public_key'] + "\""
+                         " for IP " + request.remote_addr
+                         )
+            application.logger.info(log_entry)
         key_hashid = orm.upload_key(request.form['public_key'])
         if key_hashid and key_hashid != '':
             if 'redirect' in request.form:
