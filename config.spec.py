@@ -1,20 +1,23 @@
 import psycopg2
+from os import environ
 
 # Base URL of the web server
-BASE_URL = 'http://keymaster.com'
+BASE_URL = environ.get('KM_BASE_URL')
 
 # Base URL for shortlinks (if enabled)
-BASE_SHORTENER_URL = 'http://key.io'
+BASE_SHORTENER_URL = environ.get('KM_BASE_SHORT_URL')
 
 
 # Return a connection to the Postgresql database
 def DB_CONNECTION():
-    return psycopg2.connect(database='keymaster', user='zuul')
+    db = environ.get('KM_POSTGRES_DB')
+    user = environ.get('KM_POSTGRES_USER')
+    return psycopg2.connect(database=db, user=user)
 
 # Random salt to use for hashids
-HASH_SALT = 'stay_puft'
+HASH_SALT = environ.get('KM_HASHIDS_SALT')
 
 # Where to store logs, how often to rotate them, and how many to keep
-LOGGING_LOCATION = '/var/log/keymaster/keymaster.log'
-LOGGING_FREQUENCY = 'midnight'
-LOGGING_RETENTION = 10
+LOGGING_LOCATION = environ.get('KM_LOG_LOCATION')
+LOGGING_FREQUENCY = environ.get('KM_LOG_FREQUENCY')
+LOGGING_RETENTION = int(environ.get('KM_LOG_RETENTION'))
