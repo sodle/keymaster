@@ -14,9 +14,16 @@
     <p>
       Your public key is:
     </p>
-    <p class="well">
+    <p class="well" style="overflow: auto;">
       {{ public_key }}
     </p>
+  </div>
+  <div>
+    <ul>
+      {% for service_id, service in services.iteritems() %}
+        <li><a target='_blank' href="{{ url_for('install_key', key_id=key_id, service=service_id) }}">{{ service.name }}</a></li>
+      {% endfor %}
+    </ul>
   </div>
   <div>
     <p>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Keymaster - Install your GitHub key</title>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+</head>
+<body>
+  <h1>Install your GitHub public key</h1>
+  <div>
+    <h2>Install to your account</h2>
+    <label for="key_name_user">Key name:</label>
+    <input type="text" id="key_name_user" />
+    <button id="submit_key_user">Install key</button>
+  </div>
+  <div>
+    <h2>Install to a repo</h2>
+    <select id="repo_select">
+      {% for repo in repos %}
+        <option value="{{ repo['full_name'] }}">
+          {{ repo['full_name'] }}
+        </option>
+      {% endfor %}
+    </select>
+    <label for="key_name_repo">Key name:</label>
+    <input type="text" id="key_name_repo" />
+    <input type="checkbox" id="key_read_only_repo" />
+    <label for="key_read_only_repo">Read Only</label>
+    <button id="submit_key_repo">Install key</button>
+  </div>
+</body>
+<script src='/bower_components/jquery/dist/jquery.min.js'></script>
+<script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
+<script>
+  var access_token = '{{access_token}}';
+  var public_key = '{{public_key}}';
+
+  $('#submit_key_user').click(function() {
+    $.ajax('https://api.github.com/user/keys?access_token={{access_token}}', {
+      type: 'post',
+      data: JSON.stringify({
+        title: $('#key_name_user').val(),
+        key: public_key
+      }),
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function() {alert('Key uploaded succesfully.'); window.close();},
+      error: function(data) {alert('error: ' + data.responseText);}
+    });
+  });
+
+  $('#submit_key_repo').click(function() {
+    $.ajax('https://api.github.com/repos/' + $('#repo_select').val() + '/keys?access_token={{access_token}}', {
+      type: 'post',
+      data: JSON.stringify({
+        title: $('#key_name_repo').val(),
+        key: public_key,
+        read_only: ($('#key_read_only_repo').is(':checked')) ? "true" : "false"
+      }),
+      dataType: 'json',
+      contentType: 'application/json',
+      success: function() {alert('Key uploaded succesfully.'); window.close();},
+      error: function(data) {alert('error: ' + data.responseText);}
+    });
+  });
+</script>
+</html>

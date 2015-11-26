@@ -81,7 +81,8 @@ def show_key(key_id):
         return render_template('show_key.html',
                                key_id=key_id,
                                public_key=key_obj[2],
-                               expires_in=str(lifetime).split('.')[0]
+                               expires_in=str(lifetime).split('.')[0],
+                               services=config.SERVICE_CONNECTORS
                                )
     else:
         application.logger.error('Key not found!')
@@ -101,6 +102,7 @@ def show_raw_key(key_id):
 
 
 @application.route('/k/<key_id>/extend', methods=['POST'])
+@application.route('/k/<key_id>/extend/', methods=['POST'])
 def extend_key(key_id):
     application.logger.info('Extending key ' + key_id)
     if orm.fetch_key(key_id):
@@ -112,6 +114,7 @@ def extend_key(key_id):
 
 
 @application.route('/k/<key_id>/expire', methods=['POST'])
+@application.route('/k/<key_id>/expire/', methods=['POST'])
 def expire_key(key_id):
     application.logger.info('Expiring key ' + key_id)
     if orm.fetch_key(key_id):
@@ -119,6 +122,30 @@ def expire_key(key_id):
         return redirect('/')
     else:
         application.logger.error('Key not found!')
+        abort(404)
+
+
+@application.route('/k/<key_id>/install_key/<service>')
+@application.route('/k/<key_id>/install_key/<service>/')
+def install_key(key_id, service):
+    if service in config.SERVICE_CONNECTORS and orm.fetch_key(key_id):
+        service_obj = config.SERVICE_CONNECTORS[service]
+        return service_obj.start_key_install(key_id,
+                                             url_for('finish_install_key',
+                                                     key_id=key_id,
+                                                     service=service,
+                                                     _external=True))
+    else:
+        abort(404)
+
+
+@application.route('/k/<key_id>/install_key/<service>/finish')
+@application.route('/k/<key_id>/install_key/<service>/finish/')
+def finish_install_key(key_id, service):
+    if service in config.SERVICE_CONNECTORS and orm.fetch_key(key_id):
+        service_obj = config.SERVICE_CONNECTORS[service]
+        return service_obj.finish_key_install(key_id, request.args)
+    else:
         abort(404)
 
 if __name__ == '__main__':

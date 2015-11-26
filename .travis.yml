@@ -13,4 +13,4 @@ before_script:
   - psql keymaster zuul -f db_init.sql
   - cp config.spec.py config.py
   - mkdir logs
-script: "python -m unittest discover -v"
+script: "python -m unittest discover"
