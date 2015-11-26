@@ -18,7 +18,7 @@ Keymaster provides an easy way to upload your SSH keys to services like Github a
 
 ---
 
-The app is written in Flask and connects to a Postgres database.
+The app is written in Flask and connects to a Postgres database. Nginx is used as a proxy to serve static content and pass uWSGI requests on to Flask.
 
 ### Server requirements:
 - Linux with systemd (for now)
@@ -46,3 +46,17 @@ The app is written in Flask and connects to a Postgres database.
     2. Copy or symlink `daemon/keymaster.nginx` to `/etc/nginx/conf.d/keymaster`
     3. `sudo service nginx restart`
 5. Copy `config.spec.py` to `config.py` and update the built-in settings.
+
+-- 
+
+### REST API for developing clients
+- `POST /k` uploads a key to the site.
+    Form Parameters
+    - `public_key`: the text of the public key to upload.
+    Response: A URL to the "key installation" page.
+- `GET /k/<key_id>/raw` fetches the raw text of a key.
+- `POST /k/<key_id>/extend` extends the expiration of a key by 30 minutes.
+- `POST /k/<key_id>/expire` immediately causes a key to expire.
+
+### Python API for developing connectors
+Extend the `Connector` object. Implement the `start_key_install` and `finish_key_install` functions to start the OAuth flow, pass the key along, and install it. The `name` and `logo` properties define the UI and branding for the service.
