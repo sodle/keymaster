@@ -4,11 +4,19 @@
   <title>Your SSH key on Keymaster</title>
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <style>
+    #services_list {
+      list-style: none;
+    }
+    #services_list img {
+      height: 2em;
+    }
+  </style>
 </head>
 <body>
 <div class="container-fluid">
   <div class="jumbotron">
-    <h1>Keymaster</h1>
+    <h1><a href="/">Keymaster</a></h1>
   </div>
   <div>
     <p>
@@ -19,22 +27,28 @@
     </p>
   </div>
   <div>
-    <ul>
+    <h3>Install your key:</h3>
+    <ul id="services_list">
       {% for service_id, service in services.iteritems() %}
-        <li><a target='_blank' href="{{ url_for('install_key', key_id=key_id, service=service_id) }}">{{ service.name }}</a></li>
+        {% if service.logo == '' %}
+          <li><a target='_blank' href="{{ url_for('install_key', key_id=key_id, service=service_id) }}">{{ service.name }}</a></li>
+        {% else %}
+          <li><a target='_blank' href="{{ url_for('install_key', key_id=key_id, service=service_id) }}"><img src="{{ service.logo }}" alt="{{ service.name }}" title="{{ service.name }}"></a></li>
+        {% endif %}
       {% endfor %}
     </ul>
   </div>
-  <div>
-    <p>
-      This page expires in {{ expires_in }}.
-      <form action="{{url_for('extend_key', key_id=key_id)}}" method="post">
+  <hr>
+  <p>
+    This page expires in {{ expires_in }}.
+  </p>
+  <div class="row">
+      <form class='form form-inline col-md-6' action="{{url_for('extend_key', key_id=key_id)}}" method="post">
         <button type="submit" class="btn btn-default">Extend by 30 minutes</button>
       </form>
-      <form action="{{url_for('expire_key', key_id=key_id)}}" method="post">
+      <form class='form form-inline col-md-6' action="{{url_for('expire_key', key_id=key_id)}}" method="post">
         <button type="submit" class="btn btn-danger">Expire immediately</button>
       </form>
-    </p>
   </div>
 </div>
 </body>
