@@ -32,8 +32,8 @@
 <script src='/bower_components/jquery/dist/jquery.min.js'></script>
 <script src='/bower_components/bootstrap/dist/js/bootstrap.min.js'></script>
 <script>
-  var access_token = '{{access_token}}';
-  var public_key = '{{public_key}}';
+  var access_token = {{access_token | tojson | safe}};
+  var public_key = {{public_key | tojson | safe}};
 
   $('#submit_key_user').click(function() {
     $.ajax('https://api.github.com/user/keys?access_token={{access_token}}', {
