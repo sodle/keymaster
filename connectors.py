@@ -20,6 +20,7 @@ class Connector(object):
 
 class GitHubConnector(Connector):
     name = 'GitHub'
+    logo = '/images/GitHub_Logo.png'
 
     def __init__(self, api_key, api_secret):
         self.api_key = api_key
