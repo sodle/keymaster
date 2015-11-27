@@ -18,6 +18,12 @@ Keymaster provides an easy way to upload your SSH keys to services like Github a
 
 ---
 
+### Note:
+
+This repository is for setting up the Keymaster server. If you simply want to use the service as a client, you can [visit our website](http://keymaster.sjodle.com) or [download the command line tool](https://github.com/sodle/keymaster-cli).
+
+---
+
 The app is written in Flask and connects to a Postgres database. Nginx is used as a proxy to serve static content and pass uWSGI requests on to Flask.
 
 ### Server requirements:
@@ -47,7 +53,7 @@ The app is written in Flask and connects to a Postgres database. Nginx is used a
     3. `sudo service nginx restart`
 5. Copy `config.spec.py` to `config.py` and update the built-in settings.
 
--- 
+---
 
 ### REST API for developing clients
 - `POST /k` uploads a key to the site.
